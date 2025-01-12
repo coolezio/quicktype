@@ -291,11 +291,13 @@ export class DartRenderer extends ConvenienceRenderer {
                     this.fromDynamicExpression(mapType.values.isNullable, mapType.values, "v")
                 ),
             enumType => {
+                const nullAssertion = (!enumType.isNullable && this._options.nullSafety) ? "!" : "";
                 return [
                     defined(this._enumValues.get(enumType)),
                     ".map[",
                     dynamic,
-                    this._options.nullSafety ? "]!" : "]"
+                    "]",
+                    nullAssertion
                 ];
             },
             unionType => {
